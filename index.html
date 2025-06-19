@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kefas Evaluasi</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Global Styles */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #a8edea,
+          #fed6e3
+        ); /* Warna background umum */
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        color: #333;
+        overflow-x: hidden; /* Mencegah scroll horizontal */
+      }
+
+      /* Hero Section Styling */
+      .hero-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        /* Animasi awal */
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInSlideUp 1.2s ease-out forwards;
+      }
+
+      @keyframes fadeInSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero-logo {
+        width: 150px;
+        height: auto;
+        margin-bottom: 1.5rem;
+        border-radius: 50%; /* Membuat logo bulat jika gambar kotak */
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        animation: bounceIn 1s ease-out;
+      }
+
+      @keyframes bounceIn {
+        0%,
+        20%,
+        40%,
+        60%,
+        80%,
+        100% {
+          animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        0% {
+          opacity: 0;
+          transform: scale3d(0.3, 0.3, 0.3);
+        }
+        20% {
+          transform: scale3d(1.1, 1.1, 1.1);
+        }
+        40% {
+          transform: scale3d(0.9, 0.9, 0.9);
+        }
+        60% {
+          opacity: 1;
+          transform: scale3d(1.03, 1.03, 1.03);
+        }
+        80% {
+          transform: scale3d(0.97, 0.97, 0.97);
+        }
+        100% {
+          opacity: 1;
+          transform: scale3d(1, 1, 1);
+        }
+      }
+
+      h1.typing-text {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 0.8rem;
+        min-height: 50px; /* Menjaga tinggi agar tidak jumpy */
+      }
+
+      p.subtitle {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 2rem;
+      }
+
+      .btn-masuk {
+        padding: 1rem 2.5rem;
+        background: linear-gradient(45deg, #00bcd4, #008c9e);
+        color: white;
+        font-weight: 600;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease,
+          background 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4);
+        /* Animasi muncul */
+        opacity: 0;
+        animation: fadeInScale 1s ease-out 1s forwards; /* Delay 1s setelah hero muncul */
+      }
+
+      @keyframes fadeInScale {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .btn-masuk:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(0, 188, 212, 0.6);
+        background: linear-gradient(45deg, #008c9e, #005f6b);
+      }
+
+      #toggleMusic {
+        margin-top: 1.5rem;
+        background: rgba(0, 0, 0, 0.2);
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        opacity: 0; /* Mulai tersembunyi */
+        animation: fadeIn 0.8s ease-out 1.5s forwards; /* Muncul setelah tombol masuk */
+      }
+      #toggleMusic:hover {
+        background: rgba(0, 0, 0, 0.4);
+      }
+
+      /* Teks Arahan "Silakan Klik" */
+      .click-instruction {
+        font-size: 1.1rem;
+        color: #666;
+        margin-top: 2rem;
+        opacity: 0; /* Mulai tersembunyi */
+        animation: fadeIn 0.8s ease-out 2s forwards; /* Muncul setelah music toggle */
+      }
+
+      /* Teks Instruksi Tim Baru */
+      .team-instruction {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 1.5rem; /* Memberi jarak ke grid tim */
+        font-weight: 600;
+        text-align: center;
+        opacity: 0; /* Mulai tersembunyi */
+        transform: translateY(20px); /* Untuk animasi slide-up */
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Transisi untuk saat ditampilkan */
+      }
+      .team-grid.show + .team-instruction {
+        /* Animasi teks instruksi tim saat grid muncul */
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ---------- Styling khusus team grid ---------- */
+      .team-grid {
+        display: none; /* hidden dulu, nanti di JS ditampilkan */
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem; /* Diatur ulang di JS */
+        padding: 0 1rem;
+        width: 100%;
+        max-width: 800px;
+        opacity: 0; /* Untuk animasi fade-in */
+        transform: translateY(20px); /* Untuk animasi slide-up */
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Transisi untuk saat ditampilkan */
+      }
+
+      .team-grid.show {
+        display: grid;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .team-card {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 1.5rem 1rem;
+        border-radius: 18px;
+        box-shadow: 0 6px 20px rgba(118, 75, 162, 0.4);
+        text-decoration: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .team-card h2 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.3rem;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .team-card p {
+        font-size: 1rem;
+        font-weight: 400;
+        text-align: center;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      }
+
+      .team-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(118, 75, 162, 0.7);
+      }
+
+      /* Warna khusus tiap tim */
+      .team-card.medsos {
+        background: linear-gradient(135deg, #ff6a00, #ee0979);
+        box-shadow: 0 6px 20px rgba(238, 9, 121, 0.6);
+      }
+      .team-card.data {
+        background: linear-gradient(135deg, #11998e, #38ef7d);
+        box-shadow: 0 6px 20px rgba(56, 239, 125, 0.6);
+      }
+      .team-card.acara {
+        background: linear-gradient(135deg, #fc5c7d, #6a82fb);
+        box-shadow: 0 6px 20px rgba(106, 130, 251, 0.6);
+      }
+      .team-card.humas {
+        background: linear-gradient(135deg, #f7971e, #ffd200);
+        box-shadow: 0 6px 20px rgba(255, 210, 0, 0.6);
+      }
+
+      /* Responsive untuk layar kecil */
+      @media (max-width: 768px) {
+        h1.typing-text {
+          font-size: 2rem;
+        }
+        p.subtitle {
+          font-size: 1rem;
+        }
+        .btn-masuk {
+          padding: 0.8rem 2rem;
+          font-size: 1.1rem;
+        }
+        .team-grid {
+          grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+          gap: 1rem;
+          margin-top: 1.5rem;
+          padding: 0 0.5rem;
+        }
+        .hero-logo {
+          width: 120px;
+        }
+        .team-instruction {
+          font-size: 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        h1.typing-text {
+          font-size: 1.8rem;
+          min-height: 40px;
+        }
+        p.subtitle {
+          font-size: 0.9rem;
+        }
+        .team-card h2 {
+          font-size: 1.1rem;
+        }
+        .team-card p {
+          font-size: 0.85rem;
+        }
+        .team-instruction {
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero-wrapper">
+      <img
+        src="assets/images/KEFAS SMG.png"
+        alt="Logo Kefas"
+        class="hero-logo"
+      />
+
+      <h1 class="typing-text" id="typed"></h1>
+      <p class="subtitle">
+        Silakan Saudara/i mengisi evaluasi untuk tim masing-masing.🎉
+      </p>
+      <button class="btn-masuk" id="btnMasuk">Masuk</button>
+      <button id="toggleMusic">🔊</button>
+      <p class="click-instruction" id="clickInstruction">
+        <span style="font-size: 1.5em; vertical-align: middle">👇</span> Klik
+        "Masuk" untuk melanjutkan!
+      </p>
+    </div>
+
+    <p class="team-instruction" id="teamInstruction">
+      Silakan klik untuk timnya masing-masing
+    </p>
+
+    <div class="team-grid" id="teamGrid">
+      <a href="tim/medsos.html" class="team-card medsos">
+        <h2>Medsos</h2>
+        <p>Desain, Media & Dokumentasi</p>
+      </a>
+      <a href="tim/data.html" class="team-card data">
+        <h2>Data</h2>
+        <p>Transportasi, Sekretaris & Data</p>
+      </a>
+      <a href="tim/acara.html" class="team-card acara">
+        <h2>Acara</h2>
+        <p>Acara & Bahan</p>
+      </a>
+      <a href="tim/humas.html" class="team-card humas">
+        <h2>Humas</h2>
+        <p>Media, Humas & Konsumsi</p>
+      </a>
+    </div>
+
+    <audio id="bgMusic" loop>
+      <source src="assets/audio/mengasihi.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const music = document.getElementById("bgMusic");
+        const toggleBtn = document.getElementById("toggleMusic");
+        const masukBtn = document.getElementById("btnMasuk");
+        const heroSection = document.querySelector(".hero-wrapper");
+        const teamGrid = document.getElementById("teamGrid");
+        const clickInstruction = document.getElementById("clickInstruction");
+        const teamInstruction = document.getElementById("teamInstruction"); // Ambil elemen instruksi tim
+
+        // Typed.js effect
+        const typed = new Typed("#typed", {
+          strings: [
+            "Selamat Datang di Kefas Semarang",
+            "Mari Evaluasi Tim Kamu dengan Cara Beda 💡",
+            "Tulis Cerita, Kritik, dan Saranmu 🔍",
+          ],
+          typeSpeed: 40,
+          backSpeed: 20,
+          loop: true,
+          onComplete: (self) => {
+            self.cursor.remove();
+          },
+        });
+
+        // --- Perbaikan Autoplay Musik (sesuai batasan browser) ---
+        let hasInteracted = false;
+        const playMusicOnInteraction = () => {
+          if (!hasInteracted && music.paused) {
+            music
+              .play()
+              .then(() => {
+                toggleBtn.textContent = "🔊";
+                hasInteracted = true;
+              })
+              .catch((error) => {
+                console.log(
+                  "Autoplay blocked, user needs to click play. Error:",
+                  error
+                );
+                toggleBtn.textContent = "🔇 (Tap untuk Musik)";
+              });
+          }
+          document.removeEventListener("click", playMusicOnInteraction);
+          document.removeEventListener("keydown", playMusicOnInteraction);
+        };
+
+        document.addEventListener("click", playMusicOnInteraction);
+        document.addEventListener("keydown", playMusicOnInteraction);
+
+        // Simpan posisi musik saat keluar
+        window.addEventListener("beforeunload", () => {
+          if (!music.paused) {
+            sessionStorage.setItem("musicTime", music.currentTime);
+          }
+        });
+
+        // Ambil posisi musik terakhir jika ada
+        const savedTime = sessionStorage.getItem("musicTime");
+        if (savedTime) {
+          music.currentTime = parseFloat(savedTime);
+        }
+
+        toggleBtn.addEventListener("click", () => {
+          if (music.paused) {
+            music.play();
+            toggleBtn.textContent = "🔊";
+          } else {
+            music.pause();
+            toggleBtn.textContent = "🔇";
+          }
+        });
+
+        // Navigasi: klik masuk sembunyikan hero, tampilkan team-grid
+        masukBtn.addEventListener("click", () => {
+          heroSection.style.opacity = "0";
+          heroSection.style.transform = "translateY(-20px)";
+          heroSection.style.pointerEvents = "none";
+
+          setTimeout(() => {
+            heroSection.style.display = "none";
+            teamInstruction.style.display = "block"; // Tampilkan teks instruksi tim
+            teamGrid.classList.add("show"); // Tambahkan class 'show' untuk animasi fade-in team grid
+          }, 600);
+        });
+      });
+    </script>
+  </body>
+</html>

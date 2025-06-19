@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Evaluasi Tim Medsos - Kefas</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* --- Basic reset & fonts --- */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #a8edea, #fed6e3);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1.5rem;
+        flex-direction: column; /* supaya tombol & card vertikal */
+        gap: 1rem;
+      }
+      /* --- Card wrapper --- */
+      .card {
+        background: white;
+        max-width: 480px;
+        width: 100%;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 1s ease forwards;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      h1 {
+        margin-bottom: 1rem;
+        font-weight: 600;
+        text-align: center;
+        color: #333;
+      }
+      /* --- Form styling --- */
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+      label {
+        font-weight: 600;
+        color: #555;
+      }
+      input[type="text"],
+      input[type="number"],
+      textarea {
+        padding: 0.8rem 1rem;
+        border-radius: 12px;
+        border: 2px solid #ddd;
+        font-size: 1rem;
+        resize: vertical;
+        transition: border-color 0.3s ease;
+        outline: none;
+        font-family: "Poppins", sans-serif;
+      }
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      textarea:focus {
+        border-color: #00bcd4;
+        box-shadow: 0 0 8px #00bcd4aa;
+      }
+      textarea {
+        min-height: 100px;
+        font-family: "Poppins", sans-serif;
+      }
+      button {
+        padding: 1rem;
+        background: #00bcd4;
+        color: white;
+        font-weight: 600;
+        border: none;
+        border-radius: 14px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: background 0.3s ease;
+      }
+      button:hover {
+        background: #0097a7;
+      }
+      /* Gaya baru untuk tombol saat disabled */
+      button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
+      /* Tombol kembali */
+      .btn-kembali {
+        padding: 0.8rem 1.5rem;
+        background: #555;
+        color: white;
+        font-weight: 600;
+        border-radius: 14px;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: background 0.3s ease;
+        display: inline-block;
+        text-align: center;
+      }
+      .btn-kembali:hover {
+        background: #333;
+      }
+      /* --- Responsive --- */
+      @media (max-width: 480px) {
+        body {
+          padding: 1rem;
+        }
+        .card {
+          padding: 1.5rem 1rem;
+        }
+        button {
+          font-size: 1rem;
+        }
+        .btn-kembali {
+          font-size: 0.9rem;
+          padding: 0.7rem 1.2rem;
+        }
+      }
+
+      /* Gaya untuk pesan notifikasi */
+      .notification {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #4caf50; /* Green */
+        color: white;
+        padding: 15px 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transition: opacity 0.5s, transform 0.5s;
+        z-index: 1000;
+      }
+      .notification.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      .notification.error {
+        background-color: #f44336; /* Red */
+      }
+
+      /* Gaya untuk Loading Spinner */
+      .loading-spinner {
+        display: none; /* Defaultnya tersembunyi */
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #00bcd4; /* Blue color (sesuaikan dengan warna tim Medsos) */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 1rem auto 0 auto; /* Tengah di bawah tombol */
+      }
+      .loading-spinner.show {
+        display: block;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="btn-kembali">← Kembali ke Beranda</a>
+
+    <div class="card">
+      <h1>Evaluasi Tim Medsos</h1>
+      <form
+        id="evaluasiForm"
+        action="https://script.google.com/macros/s/AKfycbwuWsmKkltfYXUTeWBYXonm9iOkpAoe2wBWTza5iGjxsQvT6jWlzjV3GW6AG8X1kQno/exec"
+        method="post"
+      >
+        <input type="hidden" name="team" value="Medsos" />
+
+        <label for="nama">Nama Kamu</label>
+        <input
+          type="text"
+          id="nama"
+          name="Nama Pengisi"
+          placeholder="Masukkan nama lengkap"
+          required
+        />
+
+        <label for="kritik">Kritik & Saran</label>
+        <textarea
+          id="kritik"
+          name="Kritik & Saran"
+          placeholder="Tulis kritik dan saranmu disini..."
+          required
+        ></textarea>
+
+        <label for="nilai">Nilai Tim Medsos (1 - 10)</label>
+        <input
+          type="number"
+          id="nilai"
+          name="Nilai Tim"
+          placeholder="Berikan nilai"
+          min="1"
+          max="10"
+          required
+        />
+
+        <button type="submit" id="submitButton">Kirim Evaluasi</button>
+        <div id="loadingSpinner" class="loading-spinner"></div>
+      </form>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script>
+      const form = document.getElementById("evaluasiForm");
+      const notification = document.getElementById("notification");
+      const submitButton = document.getElementById("submitButton");
+      const loadingSpinner = document.getElementById("loadingSpinner");
+
+      // Fungsi untuk menampilkan notifikasi
+      function showNotification(message, isError = false) {
+        notification.textContent = message;
+        notification.className = "notification"; // Reset classes
+        if (isError) {
+          notification.classList.add("error");
+        }
+        notification.classList.add("show");
+
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 3000); // Notifikasi akan hilang setelah 3 detik
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault(); // Mencegah form submit secara default
+
+        // Tampilkan spinner dan nonaktifkan tombol
+        submitButton.disabled = true;
+        loadingSpinner.classList.add("show");
+        notification.classList.remove("show"); // Sembunyikan notifikasi sebelumnya jika ada
+
+        // Membangun FormData secara manual untuk memastikan semua field terkirim
+        const formData = new FormData();
+        formData.append("team", form.elements["team"].value);
+        formData.append("Nama Pengisi", form.elements["Nama Pengisi"].value);
+        formData.append(
+          "Kritik & Saran",
+          form.elements["Kritik & Saran"].value
+        );
+        formData.append("Nilai Tim", form.elements["Nilai Tim"].value);
+
+        try {
+          const response = await fetch(form.action, {
+            method: "POST",
+            body: formData,
+          });
+
+          if (response.ok) {
+            const result = await response.text(); // Menerima respons teks dari Apps Script
+            console.log("Apps Script response:", result);
+            showNotification("Evaluasi berhasil terkirim!");
+            form.reset(); // Reset form setelah berhasil
+          } else {
+            const errorText = await response.text();
+            console.error("Error submitting form:", response.status, errorText);
+            showNotification("Gagal mengirim evaluasi. Mohon coba lagi.", true);
+          }
+        } catch (error) {
+          console.error("Network error or unexpected issue:", error);
+          showNotification(
+            "Terjadi kesalahan jaringan atau tak terduga. Periksa koneksi Anda.",
+            true
+          );
+        } finally {
+          // Selalu sembunyikan spinner dan aktifkan kembali tombol
+          loadingSpinner.classList.remove("show");
+          submitButton.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>

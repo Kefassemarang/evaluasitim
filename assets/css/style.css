@@ -1,0 +1,118 @@
+/* === style.css === */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body, html {
+  width: 100%;
+  min-height: 100%;
+  background: linear-gradient(135deg, #ffe4ec, #e0f7fa);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  padding: 1rem 0;
+}
+
+.hero-wrapper {
+  width: 90%;
+  max-width: 1000px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 30px;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 1.5s ease;
+}
+
+.hero-logo {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 25px #ffffff99;
+}
+
+h1.typing-text {
+  font-size: 2.7rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #2193b0, #6dd5ed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.btn-masuk {
+  padding: 0.9rem 2.5rem;
+  background: transparent;
+  border: 2px solid #2193b0;
+  color: #2193b0;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btn-masuk:hover {
+  background: #2193b0;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(33, 147, 176, 0.3);
+}
+
+#toggleMusic {
+  margin-top: 2rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #2193b0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+#toggleMusic:hover {
+  transform: scale(1.2);
+  color: #17677b;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-wrapper {
+    padding: 2rem 1.5rem;
+  }
+  h1.typing-text {
+    font-size: 2rem;
+  }
+  .subtitle {
+    font-size: 1rem;
+  }
+  .btn-masuk {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.5rem;
+  }
+}
+
